@@ -1,0 +1,11 @@
+.profile__add-btn{
+    cursor: pointer;
+    border: 0 none;
+    color: black;
+    background-color: black;
+    margin-top: 35px;
+    margin-left: 244px;
+    width: 150px;
+    height: 50px;
+    background-image: url(../../../images/add__button.svg);
+}
