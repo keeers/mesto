@@ -5,11 +5,18 @@
     padding-bottom: 60px;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 1023px) {
+    .footer {
+        max-width: calc((880/1024)*100%);
+        margin-top: 48px;
+        padding-bottom: 36px;
+    }
+}
+
+@media screen and (max-width: 750px) {
     .footer {
         max-width: 282px;
         margin-top: 48px;
         padding-bottom: 36px;
-
     }
 }

@@ -22,7 +22,9 @@
                 <img class="profile__avatar" src="./images/profile__avatar.png" alt="Жак-Ив Кусто">
                 <div class="profile__info">
                     <ul class="profile__list">
-                        <li class="profile__name">Жак-Ив Кусто</li>
+                        <li>
+                            <h1 class="profile__name">Жак-Ив Кусто</h1>
+                        </li>
                         <li class="profile__job">Исследователь океана</li>
                     </ul>
 
@@ -89,7 +91,16 @@
         </footer>
 
 
+        <section class="popup">
+            <div class="popup__container">
+                <button class="popup__close-btn"></button>
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <input type="text" class="popup__input popup__input_name">
+                <input type="text" class="popup__input popup__input_job">
+                <button class="popup__save-btn">Сохранить</button>
+            </div>
+        </section>
 
     </div>
-
+    <script src="../mesto/scripts/script.js"></script>
 </body>

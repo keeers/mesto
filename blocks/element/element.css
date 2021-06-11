@@ -1,3 +1,15 @@
 .element{
     min-height: 362px;
 }
+
+@media screen and (max-width: 950px) {
+    .element {
+        margin-left: 0;
+    }
+
+    .element:nth-child(2n){
+        margin-right: 0;
+    }
+}
+
+

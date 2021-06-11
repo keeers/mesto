@@ -7,12 +7,21 @@
     gap: 20px 17px;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 1023px) {
+    .elements {
+        max-width: calc((880/1024)*100%);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+}
+
+
+@media screen and (max-width: 750px) {
     .elements {
         max-width: 282px;
-        margin: auto;
         margin-top: 36px;
-        gap: 20px 0;
+        gap: 20px 0px;
         grid-template-columns: repeat(1, 1fr);
     }
 }

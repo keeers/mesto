@@ -5,11 +5,18 @@
     display: flex;
 }
 
-@media screen and (max-width: 320px) {
+
+@media screen and (max-width: 1023px) {
+    .profile {
+        max-width: calc((880/1024)*100%);
+    }
+}
+
+
+@media screen and (max-width: 750px) {
     .profile {
         max-width: 282px;
         margin-top: 42px;
-        display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         justify-content: center;
