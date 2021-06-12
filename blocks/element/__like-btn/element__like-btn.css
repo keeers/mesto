@@ -5,6 +5,10 @@
     cursor: pointer;
     border: 0 none;
     color: white;
-    background-color: white;
-    background-image: url(../../../images/like_button.svg);
+    background: transparent center url(../../../images/like_button.svg);
+    transition: 0.7s;
+}
+
+.element__like-btn:hover{
+    opacity: 0.5;
 }
