@@ -9,8 +9,12 @@
     height: 50px;
     overflow: hidden;
     padding: 0;
+    transition: 0.7s;
 }
 
+.profile__add-btn:hover{
+    opacity: 0.5;
+}
 
 @media screen and (max-width: 750px) {
     .profile__add-btn {
