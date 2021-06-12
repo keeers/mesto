@@ -13,73 +13,72 @@
     <div class="page">
 
         <header class="header">
-            <img src="./images/header__logo.svg" class="header__logo" alt="Место Россия">
+            <a class="link" href="#">
+                <img src="./images/header__logo.svg" class="header__logo" alt="Место Россия">
+            </a>
         </header>
 
         <main class="content">
 
             <section class="profile">
-                <img class="profile__avatar" src="./images/profile__avatar.png" alt="Жак-Ив Кусто">
+                <img class="profile__avatar" src="./images/profile__avatar.jpg" alt="Аватар пользователя">
                 <div class="profile__info">
-                    <ul class="profile__list">
-                        <li>
-                            <h1 class="profile__name">Жак-Ив Кусто</h1>
-                        </li>
-                        <li class="profile__job">Исследователь океана</li>
-                    </ul>
-
-                    <button class="profile__edit-btn"></button>
+                    <div>
+                        <h1 class="profile__name">Жак-Ив Кусто</h1>
+                        <p class="profile__job">Исследователь океана</p>
+                    </div>
+                    <button type="button" aria-label="Изменить" class="profile__edit-btn"></button>
                 </div>
 
-                <button class="profile__add-btn"></button>
+                <button type="button" aria-label="Добавить" class="profile__add-btn"></button>
             </section>
 
-            <section class="elements">
-                <article class="element">
-                    <img class="element__image" src="./images/kaliningrad.jpg" alt="Двор">
-                    <div class="element__rectangle">
-                        <h2 class="element__title">Калининград</h2>
-                        <button class="element__like-btn"></button>
+            <section class="cards">
+                <article class="card">
+                    <img class="card__image" src="./images/kaliningrad.jpg" alt="Двор">
+                    <div class="card__rectangle">
+                        <h2 class="card__title">Калининград</h2>
+                        <button type="button" class="card__like-btn"></button>
                     </div>
                 </article>
 
-                <article class="element">
-                    <img class="element__image" src="./images/metro.jpg" alt="Метро">
-                    <div class="element__rectangle">
-                        <h2 class="element__title">Москва</h2>
-                        <button class="element__like-btn"></button>
+                <article class="card">
+                    <img class="card__image" src="./images/metro.jpg" alt="Метро">
+                    <div class="card__rectangle">
+                        <h2 class="card__title">Москва</h2>
+                        <button type="button" class="card__like-btn"></button>
                     </div>
                 </article>
 
-                <article class="element">
-                    <img class="element__image" src="./images/ivanovo.jpg" alt="Район">
-                    <div class="element__rectangle">
-                        <h2 class="element__title">Иваново</h2>
-                        <button class="element__like-btn"></button>
+                <article class="card">
+                    <img class="card__image" src="./images/ivanovo.jpg" alt="Район">
+                    <div class="card__rectangle">
+                        <h2 class="card__title">Иваново</h2>
+                        <button type="button" class="card__like-btn"></button>
                     </div>
                 </article>
 
-                <article class="element">
-                    <img class="element__image" src="./images/nizhniy.jpg" alt="река Ока">
-                    <div class="element__rectangle">
-                        <h2 class="element__title">Нижний Новгород</h2>
-                        <button class="element__like-btn"></button>
+                <article class="card">
+                    <img class="card__image" src="./images/nizhniy.jpg" alt="река Ока">
+                    <div class="card__rectangle">
+                        <h2 class="card__title">Нижний Новгород</h2>
+                        <button type="button" class="card__like-btn"></button>
                     </div>
                 </article>
 
-                <article class="element">
-                    <img class="element__image" src="./images/kazan.jpg" alt="Спортивная площадка">
-                    <div class="element__rectangle">
-                        <h2 class="element__title">Казань</h2>
-                        <button class="element__like-btn"></button>
+                <article class="card">
+                    <img class="card__image" src="./images/kazan.jpg" alt="Спортивная площадка">
+                    <div class="card__rectangle">
+                        <h2 class="card__title">Казань</h2>
+                        <button type="button" class="card__like-btn"></button>
                     </div>
                 </article>
 
-                <article class="element">
-                    <img class="element__image" src="./images/polyana.jpg" alt="Красная Поляна">
-                    <div class="element__rectangle">
-                        <h2 class="element__title">Сочи</h2>
-                        <button class="element__like-btn"></button>
+                <article class="card">
+                    <img class="card__image" src="./images/polyana.jpg" alt="Красная Поляна">
+                    <div class="card__rectangle">
+                        <h2 class="card__title">Сочи</h2>
+                        <button type="button" class="card__like-btn"></button>
                     </div>
                 </article>
 
@@ -91,18 +90,19 @@
         </footer>
 
 
-        <section class="popup">
-            <form class="popup__container">
+        <article class="popup">
+            <form class="popup__container" name="popup-form">
                 <button class="popup__close-btn"></button>
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <input type="text" class="popup__input popup__input_name">
-                <input type="text" class="popup__input popup__input_job">
+                <input type="text" class="popup__input popup__input_type_name" name="name">
+                <input type="text" class="popup__input popup__input_type_job" name="job">
                 <button type="submit" class="popup__save-btn">Сохранить</button>
             </form>
-        </section>
+        </article>
 
     </div>
-    <script src="../mesto/scripts/script.js"></script>
+
+    <script src="./scripts/script.js"></script>
 </body>
 
 </html>

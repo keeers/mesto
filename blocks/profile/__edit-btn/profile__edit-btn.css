@@ -3,11 +3,11 @@
     height: 24px;
     cursor: pointer;
     background: transparent center url(../../../images/edit__button.svg);
-    background-size: auto;
+    background-size: cover;
     background-repeat: no-repeat;
     border: none;
-    margin-left: 18px;
-    margin-top: 9px;
+    margin-left: auto;
+    margin-top: 15px;
     padding: 0;
     transition: 0.7s;
 }
@@ -20,7 +20,5 @@
     .profile__edit-btn {
         width: 18px;
         height: 18px;
-        margin-left: 10px;
-        margin-top: 3px;
     }
 }
