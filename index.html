@@ -34,55 +34,20 @@
             </section>
 
             <section class="cards">
-                <article class="card">
-                    <img class="card__image" src="./images/kaliningrad.jpg" alt="Двор">
-                    <div class="card__rectangle">
-                        <h2 class="card__title">Калининград</h2>
-                        <button type="button" aria-label="Нравится" class="card__like-btn"></button>
-                    </div>
-                </article>
 
-                <article class="card">
-                    <img class="card__image" src="./images/metro.jpg" alt="Метро">
-                    <div class="card__rectangle">
-                        <h2 class="card__title">Москва</h2>
-                        <button type="button" aria-label="Нравится" class="card__like-btn"></button>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img class="card__image" src="./images/ivanovo.jpg" alt="Район">
-                    <div class="card__rectangle">
-                        <h2 class="card__title">Иваново</h2>
-                        <button type="button" aria-label="Нравится" class="card__like-btn"></button>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img class="card__image" src="./images/nizhniy.jpg" alt="река Ока">
-                    <div class="card__rectangle">
-                        <h2 class="card__title">Нижний Новгород</h2>
-                        <button type="button" aria-label="Нравится" class="card__like-btn"></button>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img class="card__image" src="./images/kazan.jpg" alt="Спортивная площадка">
-                    <div class="card__rectangle">
-                        <h2 class="card__title">Казань</h2>
-                        <button type="button" aria-label="Нравится" class="card__like-btn"></button>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img class="card__image" src="./images/polyana.jpg" alt="Красная Поляна">
-                    <div class="card__rectangle">
-                        <h2 class="card__title">Сочи</h2>
-                        <button type="button" aria-label="Нравится" class="card__like-btn"></button>
-                    </div>
-                </article>
+                <template class="template">
+                    <article class="card">
+                        <img class="card__image" src="" alt="Фото места">
+                        <button type="button" aria-label="Удалить" class="card__delete-btn"></button>
+                        <div class="card__rectangle">
+                            <h2 class="card__title"></h2>
+                            <button type="button" aria-label="Нравится" class="card__like-btn"></button>
+                        </div>
+                    </article>
+                </template>
 
             </section>
+
         </main>
 
         <footer class="footer">
@@ -91,7 +56,7 @@
 
 
         <article class="popup">
-            <form class="popup__container" name="popup-form">
+            <form class="popup__container" name="popup-editForm">
                 <button type="button" class="popup__close-btn"></button>
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <input type="text" class="popup__input popup__input_type_name" name="name">
@@ -100,9 +65,21 @@
             </form>
         </article>
 
+        <article class="popup">
+            <form class="popup__container" name="popup-addForm">
+                <button type="button" class="popup__close-btn"></button>
+                <h2 class="popup__title">Новое место</h2>
+                <input type="text" class="popup__input popup__input_type_title" name="title" placeholder="Название">
+                <input type="text" class="popup__input popup__input_type_link" name="link"
+                    placeholder="Ссылка на картинку">
+                <button type="submit" class="popup__save-btn">Создать</button>
+            </form>
+        </article>
+
     </div>
 
     <script src="./scripts/script.js"></script>
+
 </body>
 
 </html>
