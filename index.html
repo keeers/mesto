@@ -33,20 +33,7 @@
                 <button type="button" aria-label="Добавить" class="profile__add-btn"></button>
             </section>
 
-            <section class="cards">
-
-                <template class="template">
-                    <article class="card">
-                        <img class="card__image" src="" alt="Фото места">
-                        <button type="button" aria-label="Удалить" class="card__delete-btn"></button>
-                        <div class="card__rectangle">
-                            <h2 class="card__title"></h2>
-                            <button type="button" aria-label="Нравится" class="card__like-btn"></button>
-                        </div>
-                    </article>
-                </template>
-
-            </section>
+            <section class="cards"> </section>
 
         </main>
 
@@ -67,7 +54,7 @@
 
         <article class="popup">
             <form class="popup__container" name="popup-addForm">
-                <button type="button" class="popup__close-btn"></button>
+                <button type="button" class="popup__close-btn popup__close-btn_type_s"></button>
                 <h2 class="popup__title">Новое место</h2>
                 <input type="text" class="popup__input popup__input_type_title" name="title" placeholder="Название">
                 <input type="text" class="popup__input popup__input_type_link" name="link"
@@ -76,7 +63,28 @@
             </form>
         </article>
 
+        <article class="popup">
+            <div class="popup__viewbox">
+                <button type="button" class="popup__close-btn popup__close-btn_type_s"></button>
+                <figure class="popup__figure">
+                    <img class="popup__image" src="#" alt="Фото места">
+                    <figcaption class="popup__caption"></figcaption>
+                </figure>
+            </div>
+        </article>
+
     </div>
+
+    <template class="template">
+        <article class="card">
+            <img class="card__image" src="" alt="Фото места">
+            <button type="button" aria-label="Удалить" class="card__delete-btn"></button>
+            <div class="card__rectangle">
+                <h2 class="card__title"></h2>
+                <button type="button" aria-label="Нравится" class="card__like-btn"></button>
+            </div>
+        </article>
+    </template>
 
     <script src="./scripts/script.js"></script>
 

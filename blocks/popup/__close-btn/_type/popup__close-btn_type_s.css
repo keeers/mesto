@@ -1,0 +1,16 @@
+.popup__close-btn_type_s{
+    height: 32px;
+    width: 32px;
+    background: transparent center url(../../../../images/close__button_s.svg);
+    
+}
+
+@media screen and (max-width: 750px) {
+    .popup__close-btn_type_s{
+        background: transparent center url(../../../../images/close__button_xs.svg);
+        top: -32px;
+        right: 0;
+        width: 20px;
+        height: 20px;
+    }
+}
