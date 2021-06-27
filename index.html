@@ -42,17 +42,18 @@
         </footer>
 
 
-        <article class="popup">
+        <div class="popup popup_type_edit-profile">
+            <!-- В прошлой проектной работе более семантически подходящим по замечанию ревьювера был тег article -->
             <form class="popup__container" name="popup-editForm">
                 <button type="button" class="popup__close-btn"></button>
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <input type="text" class="popup__input popup__input_type_name" name="name">
-                <input type="text" class="popup__input popup__input_type_job" name="job">
+                <input type="text" class="popup__input popup__input_type_name" name="name" placeholder="Имя">
+                <input type="text" class="popup__input popup__input_type_job" name="job" placeholder="Вид деятельности">
                 <button type="submit" class="popup__save-btn">Сохранить</button>
             </form>
-        </article>
+        </div>
 
-        <article class="popup">
+        <div class="popup popup_type_add-card">
             <form class="popup__container" name="popup-addForm">
                 <button type="button" class="popup__close-btn popup__close-btn_type_s"></button>
                 <h2 class="popup__title">Новое место</h2>
@@ -61,17 +62,17 @@
                     placeholder="Ссылка на картинку">
                 <button type="submit" class="popup__save-btn">Создать</button>
             </form>
-        </article>
+        </div>
 
-        <article class="popup">
+        <div class="popup popup_type_image">
             <div class="popup__viewbox">
                 <button type="button" class="popup__close-btn popup__close-btn_type_s"></button>
                 <figure class="popup__figure">
-                    <img class="popup__image" src="#" alt="Фото места">
+                    <img class="popup__image" src="#" alt="Название места">
                     <figcaption class="popup__caption"></figcaption>
                 </figure>
             </div>
-        </article>
+        </div>
 
     </div>
 
