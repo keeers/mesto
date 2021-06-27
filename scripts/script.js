@@ -40,110 +40,103 @@ const popupForms = document.querySelectorAll('.popup__container');
 const cards = document.querySelector('.cards');
 const popupImage = document.querySelector('.popup__image');
 const popupCaption = document.querySelector('.popup__caption');
+const editPopup = document.querySelector('.popup_type_edit-profile');
+const addPopup = document.querySelector('.popup_type_add-card');
+const viewPopup = document.querySelector('.popup_type_image');
 
 
-
-
-const openPopup = function (evt) {
-    if (evt.target == editButton) {
-        const popupElement = popupElements[0];
-        popupInputName.value = name.textContent;
-        popupInputJob.value = job.textContent;
-        popupElement.classList.add('popup_is-opened');
-    } else if (evt.target == addButton) {
-        const popupElement = popupElements[1];
-        popupElement.classList.add('popup_is-opened');
-    } else {
-        const popupElement = popupElements[2];
-        popupElement.classList.add('popup_is-opened');
-    }
-
+const openPopup = function (popupElement) {
+    popupElement.classList.add('popup_is-opened');
 }
 
-const savePopup = function (evt) {
-    evt.preventDefault();
-    const popupElement = evt.target.closest('.popup');
-    if (popupElement == popupElements[0]) {
-        name.textContent = popupInputName.value;
-        job.textContent = popupInputJob.value;
-    } else if (popupElement == popupElements[1]) {
-        const card = template.cloneNode(true);
-        card.querySelector('.card__image').src = popupInputLink.value;
-        card.querySelector('.card__title').textContent = popupInputTitle.value;
-
-        setEventListeners(card);
-        cards.prepend(card);
-    }
-
-    popupElement.classList.remove('popup_is-opened');
+const choosePopup = function (item) {
+    if (item.target === editButton) {
+        openPopup(editPopup);
+        /* popupInputName.value = name.textContent;
+        popupInputJob.value = job.textContent; 
+        <--- Это было требование в прошлой проектной работе и ничего про изменения работы данного попапа в новой работе было не сказано --->
+        */
+    } else if (item.target === addButton) {
+        openPopup(addPopup);
+    } else openPopup(viewPopup);
 }
 
-
-const closePopup = function (evt) {
-    const popupElement = evt.target.closest('.popup');
-    popupElement.classList.remove('popup_is-opened');
+const closePopup = function (popupElement) {
+    popupElement.target.closest('.popup').classList.remove('popup_is-opened');
 }
 
-
-arrCloseButtons = Array.from(popupCloseButtons);
-arrCloseButtons.forEach(function (item) {
+const closeButtons = Array.from(popupCloseButtons);
+closeButtons.forEach(function (item) {
     item.addEventListener('click', closePopup);
 })
 
-arrPopupForms = Array.from(popupForms);
-arrPopupForms.forEach(function (item) {
-    item.addEventListener('submit', savePopup);
-})
-
-function setEventListeners(card) {
-    card.querySelector('.card__like-btn').addEventListener('click', cardLike);
-    card.querySelector('.card__delete-btn').addEventListener('click', cardDelete);
+function setCardListeners(card) {
+    card.querySelector('.card__like-btn').addEventListener('click', toggleLike);
+    card.querySelector('.card__delete-btn').addEventListener('click', deleteCard);
     card.querySelector('.card').addEventListener('click', cardView);
 }
 
-function renderCard(item) {
+function createCard(item) {
     const card = template.cloneNode(true);
     card.querySelector('.card__image').src = item.link;
+    card.querySelector('.card__image').alt = 'На фотографии ' + item.name;
     card.querySelector('.card__title').textContent = item.name;
 
-    setEventListeners(card);
-    cards.prepend(card);
+    setCardListeners(card);
+    return card;
+}
+
+function addCard(item) {
+    cards.prepend(createCard(item));
+
 }
 
 function renderCards(items) {
-    items.forEach(renderCard);
+    items.forEach(addCard);
 }
 
 function cardView(evt) {
     const card = evt.target.closest('.card');
     popupImage.src = card.querySelector('.card__image').src;
+    popupImage.alt = 'На фотографии ' + card.querySelector('.card__title').textContent;
     popupCaption.textContent = card.querySelector('.card__title').textContent;
-    if (evt.target == card.querySelector('.card__image')) {
-        openPopup(evt.target);
+    if (evt.target === card.querySelector('.card__image')) {
+        choosePopup(evt.target);
     }
 }
 
-function cardLike(evt) {
+function toggleLike(evt) {
     const likeButton = evt.target.closest('.card__like-btn');
     likeButton.classList.toggle('card__like-btn_is-active');
 }
 
-function cardDelete(evt) {
+function deleteCard(evt) {
     const card = evt.target.closest('.card');
     card.remove();
 }
 
-function cardCreate() {
-    const card = template.cloneNode(true);
-    card.querySelector('.card__image').src = popupInputLink.value;
-    card.querySelector('.card__title').textContent = popupInputName.value;
-
-    setEventListeners(card);
-    cards.append(card);
+const submitEditProfilePopup = function (evt) {
+    evt.preventDefault();
+    name.textContent = popupInputName.value;
+    job.textContent = popupInputJob.value;
+    popupInputName.value = '';
+    popupInputJob.value = '';
+    closePopup(evt);
 }
 
-addButton.addEventListener('click', openPopup);
-editButton.addEventListener('click', openPopup);
+const submitAddCardPopup = function (evt) {
+    evt.preventDefault();
+    const newCard = {
+        name: popupInputTitle.value,
+        link: popupInputLink.value
+    };
+    addCard(newCard);
+    closePopup(evt);
+}
 
+addButton.addEventListener('click', choosePopup);
+editButton.addEventListener('click', choosePopup);
+addPopup.addEventListener('submit', submitAddCardPopup);
+editPopup.addEventListener('submit', submitEditProfilePopup);
 
 renderCards(initialCards);
