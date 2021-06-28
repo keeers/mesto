@@ -25,7 +25,7 @@ const initialCards = [
     }
 ];
 
-const template = document.querySelector('.template').content;
+const cardTemplate = document.querySelector('.template').content;
 const editButton = document.querySelector('.profile__edit-btn');
 const addButton = document.querySelector('.profile__add-btn');
 const popupElements = document.querySelectorAll('.popup');
@@ -34,9 +34,8 @@ const popupInputName = document.querySelector('.popup__input_type_name');
 const popupInputJob = document.querySelector('.popup__input_type_job');
 const popupInputTitle = document.querySelector('.popup__input_type_title');
 const popupInputLink = document.querySelector('.popup__input_type_link');
-const name = document.querySelector('.profile__name');
-const job = document.querySelector('.profile__job');
-const popupForms = document.querySelectorAll('.popup__container');
+const profileName = document.querySelector('.profile__name');
+const profileJob = document.querySelector('.profile__job');
 const cards = document.querySelector('.cards');
 const popupImage = document.querySelector('.popup__image');
 const popupCaption = document.querySelector('.popup__caption');
@@ -65,7 +64,7 @@ function setCardListeners(card) {
 }
 
 function createCard(item) {
-    const card = template.cloneNode(true);
+    const card = cardTemplate.cloneNode(true);
     const image = card.querySelector('.card__image');
     const title = card.querySelector('.card__title');
     image.src = item.link;
@@ -106,8 +105,8 @@ function deleteCard(evt) {
 
 const submitEditProfilePopup = function (evt) {
     evt.preventDefault();
-    name.textContent = popupInputName.value;
-    job.textContent = popupInputJob.value;
+    profileName.textContent = popupInputName.value;
+    profileJob.textContent = popupInputJob.value;
     closePopup(evt);
 }
 
@@ -126,11 +125,13 @@ const submitAddCardPopup = function (evt) {
 addButton.addEventListener('click', () => {
     openPopup(addPopup);
 });
+
 editButton.addEventListener('click', () => {
-    popupInputName.value = name.textContent;
-    popupInputJob.value = job.textContent;
+    popupInputName.value = profileName.textContent;
+    popupInputJob.value = profileJob.textContent;
     openPopup(editPopup)
 });
+
 addPopup.addEventListener('submit', submitAddCardPopup);
 editPopup.addEventListener('submit', submitEditProfilePopup);
 
