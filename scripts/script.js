@@ -42,27 +42,15 @@ const popupImage = document.querySelector('.popup__image');
 const popupCaption = document.querySelector('.popup__caption');
 const editPopup = document.querySelector('.popup_type_edit-profile');
 const addPopup = document.querySelector('.popup_type_add-card');
-const viewPopup = document.querySelector('.popup_type_image');
+const imagePopup = document.querySelector('.popup_type_image');
 
 
 const openPopup = function (popupElement) {
     popupElement.classList.add('popup_is-opened');
 }
 
-const choosePopup = function (item) {
-    if (item.target === editButton) {
-        openPopup(editPopup);
-        /* popupInputName.value = name.textContent;
-        popupInputJob.value = job.textContent; 
-        <--- Это было требование в прошлой проектной работе и ничего про изменения работы данного попапа в новой работе было не сказано --->
-        */
-    } else if (item.target === addButton) {
-        openPopup(addPopup);
-    } else openPopup(viewPopup);
-}
-
-const closePopup = function (popupElement) {
-    popupElement.target.closest('.popup').classList.remove('popup_is-opened');
+const closePopup = function (evt) {
+    evt.target.closest('.popup').classList.remove('popup_is-opened');
 }
 
 const closeButtons = Array.from(popupCloseButtons);
@@ -73,14 +61,16 @@ closeButtons.forEach(function (item) {
 function setCardListeners(card) {
     card.querySelector('.card__like-btn').addEventListener('click', toggleLike);
     card.querySelector('.card__delete-btn').addEventListener('click', deleteCard);
-    card.querySelector('.card').addEventListener('click', cardView);
+    card.querySelector('.card__image').addEventListener('click', openImagePopup);
 }
 
 function createCard(item) {
     const card = template.cloneNode(true);
-    card.querySelector('.card__image').src = item.link;
-    card.querySelector('.card__image').alt = 'На фотографии ' + item.name;
-    card.querySelector('.card__title').textContent = item.name;
+    const image = card.querySelector('.card__image');
+    const title = card.querySelector('.card__title');
+    image.src = item.link;
+    image.alt = 'На фотографии ' + item.name;
+    title.textContent = item.name;
 
     setCardListeners(card);
     return card;
@@ -88,21 +78,20 @@ function createCard(item) {
 
 function addCard(item) {
     cards.prepend(createCard(item));
-
 }
 
 function renderCards(items) {
     items.forEach(addCard);
 }
 
-function cardView(evt) {
+function openImagePopup(evt) {
     const card = evt.target.closest('.card');
-    popupImage.src = card.querySelector('.card__image').src;
-    popupImage.alt = 'На фотографии ' + card.querySelector('.card__title').textContent;
-    popupCaption.textContent = card.querySelector('.card__title').textContent;
-    if (evt.target === card.querySelector('.card__image')) {
-        choosePopup(evt.target);
-    }
+    const image = card.querySelector('.card__image');
+    const title = card.querySelector('.card__title');
+    popupImage.src = image.src;
+    popupImage.alt = 'На фотографии ' + title.textContent;
+    popupCaption.textContent = title.textContent;
+    openPopup(imagePopup);
 }
 
 function toggleLike(evt) {
@@ -119,8 +108,6 @@ const submitEditProfilePopup = function (evt) {
     evt.preventDefault();
     name.textContent = popupInputName.value;
     job.textContent = popupInputJob.value;
-    popupInputName.value = '';
-    popupInputJob.value = '';
     closePopup(evt);
 }
 
@@ -131,11 +118,19 @@ const submitAddCardPopup = function (evt) {
         link: popupInputLink.value
     };
     addCard(newCard);
+    popupInputTitle.value = '';
+    popupInputLink.value = '';
     closePopup(evt);
 }
 
-addButton.addEventListener('click', choosePopup);
-editButton.addEventListener('click', choosePopup);
+addButton.addEventListener('click', () => {
+    openPopup(addPopup);
+});
+editButton.addEventListener('click', () => {
+    popupInputName.value = name.textContent;
+    popupInputJob.value = job.textContent;
+    openPopup(editPopup)
+});
 addPopup.addEventListener('submit', submitAddCardPopup);
 editPopup.addEventListener('submit', submitEditProfilePopup);
 
