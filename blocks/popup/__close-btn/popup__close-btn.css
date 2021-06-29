@@ -6,6 +6,7 @@
     height: 40px;
     background: transparent center url(../../../images/close__button.svg);
     background-size: auto;
+    background-repeat: no-repeat;
     border: none;
     cursor: pointer;
     transition: 0.7s;

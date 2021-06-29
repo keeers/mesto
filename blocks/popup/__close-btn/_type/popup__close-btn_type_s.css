@@ -2,12 +2,16 @@
     height: 32px;
     width: 32px;
     background: transparent center url(../../../../images/close__button_s.svg);
+    background-size: auto;
+    background-repeat: no-repeat;
     
 }
 
 @media screen and (max-width: 750px) {
     .popup__close-btn_type_s{
         background: transparent center url(../../../../images/close__button_xs.svg);
+        background-size: auto;
+        background-repeat: no-repeat;
         top: -32px;
         right: 0;
         width: 20px;

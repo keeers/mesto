@@ -6,6 +6,8 @@
     border: 0 none;
     color: white;
     background: transparent center url(../../../images/like_button.svg);
+    background-size: auto;
+    background-repeat: no-repeat;
     transition: 0.7s;
 }
 

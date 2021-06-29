@@ -117,12 +117,12 @@ const submitAddCardPopup = function (evt) {
         link: popupInputLink.value
     };
     addCard(newCard);
-    popupInputTitle.value = '';
-    popupInputLink.value = '';
     closePopup(evt);
 }
 
 addButton.addEventListener('click', () => {
+    popupInputTitle.value = '';
+    popupInputLink.value = '';
     openPopup(addPopup);
 });
 
