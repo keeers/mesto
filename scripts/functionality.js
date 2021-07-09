@@ -1,30 +1,3 @@
-const initialCards = [
-    {
-        name: 'Сочи',
-        link: './images/polyana.jpg'
-    },
-    {
-        name: 'Казань',
-        link: './images/kazan.jpg'
-    },
-    {
-        name: 'Нижний Новгород',
-        link: './images/nizhniy.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: './images/ivanovo.jpg'
-    },
-    {
-        name: 'Москва',
-        link: './images/metro.jpg'
-    },
-    {
-        name: 'Калининград',
-        link: './images/kaliningrad.jpg'
-    }
-];
-
 const cardTemplate = document.querySelector('.template').content;
 const editButton = document.querySelector('.profile__edit-btn');
 const addButton = document.querySelector('.profile__add-btn');
@@ -44,12 +17,32 @@ const addPopup = document.querySelector('.popup_type_add-card');
 const imagePopup = document.querySelector('.popup_type_image');
 
 
-const openPopup = function (popupElement) {
+function openPopup(popupElement) {
     popupElement.classList.add('popup_is-opened');
 }
 
-const closePopup = function (evt) {
-    evt.target.closest('.popup').classList.remove('popup_is-opened');
+function removePopup(popupElement) {
+    popupElement.classList.remove('popup_is-opened');
+    removeClosePopupListeners(popupElement);
+}
+
+function closePopup(evt) {
+    const popupElement = evt.target.closest('.popup');
+    removePopup(popupElement);
+}
+
+function closePopupOnClick(evt) {
+    if (evt.target.classList.contains('popup')) {
+        closePopup(evt);
+    };
+}
+
+function closePopunOnEscape(evt) {
+    const popupElement = document.querySelector('.popup_is-opened');
+    if (evt.key === 'Escape') {
+        removePopup(popupElement);
+    };
+
 }
 
 const closeButtons = Array.from(popupCloseButtons);
@@ -91,6 +84,7 @@ function openImagePopup(evt) {
     popupImage.alt = 'На фотографии ' + title.textContent;
     popupCaption.textContent = title.textContent;
     openPopup(imagePopup);
+    addClosePopupListeners(imagePopup);
 }
 
 function toggleLike(evt) {
@@ -103,14 +97,14 @@ function deleteCard(evt) {
     card.remove();
 }
 
-const submitEditProfilePopup = function (evt) {
+function submitEditProfilePopup(evt) {
     evt.preventDefault();
     profileName.textContent = popupInputName.value;
     profileJob.textContent = popupInputJob.value;
     closePopup(evt);
 }
 
-const submitAddCardPopup = function (evt) {
+function submitAddCardPopup(evt) {
     evt.preventDefault();
     const newCard = {
         name: popupInputTitle.value,
@@ -124,15 +118,29 @@ addButton.addEventListener('click', () => {
     popupInputTitle.value = '';
     popupInputLink.value = '';
     openPopup(addPopup);
+    addClosePopupListeners(addPopup);
 });
 
 editButton.addEventListener('click', () => {
     popupInputName.value = profileName.textContent;
     popupInputJob.value = profileJob.textContent;
     openPopup(editPopup)
+    addClosePopupListeners(editPopup);
 });
+
+function addClosePopupListeners(popupElement) {
+    popupElement.addEventListener('click', closePopupOnClick);
+    document.addEventListener('keydown', closePopunOnEscape);
+}
+
+function removeClosePopupListeners(popupElement) {
+    popupElement.removeEventListener('click', closePopupOnClick);
+    document.removeEventListener('keydown', closePopunOnEscape);
+}
 
 addPopup.addEventListener('submit', submitAddCardPopup);
 editPopup.addEventListener('submit', submitEditProfilePopup);
 
+
 renderCards(initialCards);
+
