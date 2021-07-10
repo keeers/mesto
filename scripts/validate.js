@@ -1,18 +1,16 @@
-function showError(inputElement, sectionSelector, inputErrorClass, errorSelector, errorClass, errorMessage) {
-    const formSection = inputElement.closest(sectionSelector);
+function showError(formElement, inputElement, inputErrorClass, errorClass, errorMessage) {
+    const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
     inputElement.classList.add(inputErrorClass);
-    const errorElement = formSection.querySelector(errorSelector);
     errorElement.classList.add(errorClass);
     errorElement.textContent = errorMessage;
-}
+};
 
-function hideError(inputElement, sectionSelector, inputErrorClass, errorSelector, errorClass) {
-    const formSection = inputElement.closest(sectionSelector);
+function hideError(formElement, inputElement, inputErrorClass, errorClass) {
+    const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
     inputElement.classList.remove(inputErrorClass);
-    const errorElement = formSection.querySelector(errorSelector);
     errorElement.classList.remove(errorClass);
     errorElement.textContent = '';
-}
+};
 
 function toggleSaveButton(inputList, buttonElement, inactiveButtonClass) {
     const findInvalidInput = (inputElement) => !inputElement.validity.valid;
@@ -24,54 +22,46 @@ function toggleSaveButton(inputList, buttonElement, inactiveButtonClass) {
     } else {
         buttonElement.classList.remove(inactiveButtonClass);
         buttonElement.removeAttribute('disabled');
-    }
-}
+    };
+};
 
-function checkValidity(inputElement, sectionSelector, inputErrorClass, errorSelector, errorClass) {
+function checkValidity(formElement, inputElement, inputErrorClass, errorClass) {
     if (!inputElement.validity.valid) {
-        showError(inputElement, sectionSelector, inputErrorClass, errorSelector, errorClass, inputElement.validationMessage);
-    } else hideError(inputElement, sectionSelector, inputErrorClass, errorSelector, errorClass);
-}
+        showError(formElement, inputElement, inputErrorClass, errorClass, inputElement.validationMessage);
+    } else hideError(formElement, inputElement, inputErrorClass, errorClass);
+};
 
-function setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, sectionSelector, inputErrorClass, errorSelector, errorClass) {
+function setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) {
     const inputList = Array.from(formElement.querySelectorAll(inputSelector));
     const buttonElement = formElement.querySelector(submitButtonSelector);
 
     function setValidateListeners(inputElement) {
         inputElement.addEventListener('input', () => {
-            checkValidity(inputElement, sectionSelector, inputErrorClass, errorSelector, errorClass);
+            checkValidity(formElement, inputElement, inputErrorClass, errorClass);
             toggleSaveButton(inputList, buttonElement, inactiveButtonClass);
         });
-    }
+    };
 
     inputList.forEach((inputElement) => {
         setValidateListeners(inputElement);
+        hideError(formElement, inputElement, inputErrorClass, errorClass);
     });
-}
+    toggleSaveButton(inputList, buttonElement, inactiveButtonClass);
+};
 
-function enableValidation({
-    formSelector,
-    inputSelector,
-    submitButtonSelector,
-    inactiveButtonClass,
-    sectionSelector,
-    inputErrorClass,
-    errorSelector,
-    errorClass
-}) {
+function enableValidation({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass }) {
     const formList = Array.from(document.querySelectorAll(formSelector));
     formList.forEach((formElement) => {
-        setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, sectionSelector, inputErrorClass, errorSelector, errorClass)
+        setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass)
     });
-}
+};
 
-enableValidation({
+const config = {
     formSelector: '.popup__container',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__save-btn',
     inactiveButtonClass: 'popup__save-btn_disabled',
-    sectionSelector: '.popup__section',
     inputErrorClass: 'popup__input_type_error',
-    errorSelector: '.popup__input-error',
     errorClass: 'popup__input-error_active'
-});
+};
+
