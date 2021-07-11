@@ -18,9 +18,11 @@ const imagePopup = document.querySelector('.popup_type_image');
 
 
 function openPopup(popupElement) {
+    const formElement = popupElement.querySelector(config.formSelector);
+    const inputList = Array.from(popupElement.querySelectorAll(config.inputSelector));
     popupElement.classList.add('popup_is-opened');
     addClosePopupListeners(popupElement);
-    enableValidation(config);
+    clearValidationErrors(formElement, inputList);
 };
 
 function removePopup(popupElement) {

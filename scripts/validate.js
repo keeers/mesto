@@ -12,6 +12,13 @@ function hideError(formElement, inputElement, inputErrorClass, errorClass) {
     errorElement.textContent = '';
 };
 
+function clearValidationErrors(formElement, inputList) {
+    inputList.forEach((inputElement) => {
+        toggleSaveButton(inputList, formElement.querySelector(config.submitButtonSelector), config.inactiveButtonClass);
+        hideError(formElement, inputElement, config.inputErrorClass, config.errorClass);
+    });
+};
+
 function toggleSaveButton(inputList, buttonElement, inactiveButtonClass) {
     const findInvalidInput = (inputElement) => !inputElement.validity.valid;
     const hasInvalidInput = inputList.some(findInvalidInput);
@@ -28,7 +35,9 @@ function toggleSaveButton(inputList, buttonElement, inactiveButtonClass) {
 function checkValidity(formElement, inputElement, inputErrorClass, errorClass) {
     if (!inputElement.validity.valid) {
         showError(formElement, inputElement, inputErrorClass, errorClass, inputElement.validationMessage);
-    } else hideError(formElement, inputElement, inputErrorClass, errorClass);
+    } else {
+        hideError(formElement, inputElement, inputErrorClass, errorClass);
+    };
 };
 
 function setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) {
@@ -44,9 +53,7 @@ function setEventListeners(formElement, inputSelector, submitButtonSelector, ina
 
     inputList.forEach((inputElement) => {
         setValidateListeners(inputElement);
-        hideError(formElement, inputElement, inputErrorClass, errorClass);
     });
-    toggleSaveButton(inputList, buttonElement, inactiveButtonClass);
 };
 
 function enableValidation({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass }) {
@@ -65,3 +72,4 @@ const config = {
     errorClass: 'popup__input-error_active'
 };
 
+enableValidation(config);
