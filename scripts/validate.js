@@ -12,11 +12,13 @@ function hideError(formElement, inputElement, inputErrorClass, errorClass) {
     errorElement.textContent = '';
 };
 
-function clearValidationErrors(formElement, inputList) {
+function clearValidationErrors(popupElement, config) {
+    const formElement = popupElement.querySelector(config.formSelector);
+    const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
     inputList.forEach((inputElement) => {
-        toggleSaveButton(inputList, formElement.querySelector(config.submitButtonSelector), config.inactiveButtonClass);
         hideError(formElement, inputElement, config.inputErrorClass, config.errorClass);
     });
+    toggleSaveButton(inputList, formElement.querySelector(config.submitButtonSelector), config.inactiveButtonClass);
 };
 
 function toggleSaveButton(inputList, buttonElement, inactiveButtonClass) {
