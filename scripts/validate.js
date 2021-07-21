@@ -1,3 +1,5 @@
+export { clearValidationErrors, config }
+
 function showError(formElement, inputElement, inputErrorClass, errorClass, errorMessage) {
     const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
     inputElement.classList.add(inputErrorClass);
