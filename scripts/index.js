@@ -1,5 +1,5 @@
-import { initialCards } from './initial-cards.js';
-import Card from './card.js';
+import { initialCards } from './initialCards.js';
+import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
 const config = {
@@ -85,10 +85,11 @@ addButton.addEventListener('click', () => {
 });
 
 editButton.addEventListener('click', () => {
+    const editForm = document.forms.editForm;
     popupInputName.value = profileName.textContent;
     popupInputJob.value = profileJob.textContent;
     openPopup(editPopup);
-    new FormValidator(document.forms.editForm, config).clearValidationErrors();
+    new FormValidator(editForm, config).clearValidationErrors();
 });
 
 function addClosePopupListeners(popupElement) {
