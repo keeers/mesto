@@ -1,8 +1,17 @@
-import { initialCards } from './initial-cards.js'
-import Card from './card.js'
-import { clearValidationErrors, config } from './validate.js'
+import { initialCards } from './initial-cards.js';
+import Card from './card.js';
+import FormValidator from './FormValidator.js';
 
+const config = {
+    formSelector: '.popup__container',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__save-btn',
+    inactiveButtonClass: 'popup__save-btn_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error_active'
+};
 
+const formList = Array.from(document.querySelectorAll('.popup__container'));
 const templateSelector = '.template';
 const editButton = document.querySelector('.profile__edit-btn');
 const addButton = document.querySelector('.profile__add-btn');
@@ -64,21 +73,22 @@ function submitAddCardPopup(evt) {
         name: popupInputTitle.value,
         link: popupInputLink.value
     };
-    addCard(newCard);
+    new Card(newCard, templateSelector).addCard();
     closePopup(evt);
 };
 
 addButton.addEventListener('click', () => {
-    document.forms.addForm.reset();
+    const addForm = document.forms.addForm;
+    addForm.reset();
     openPopup(addPopup);
-    clearValidationErrors(addPopup, config);
+    new FormValidator(addForm, config).clearValidationErrors();
 });
 
 editButton.addEventListener('click', () => {
     popupInputName.value = profileName.textContent;
     popupInputJob.value = profileJob.textContent;
     openPopup(editPopup);
-    clearValidationErrors(editPopup, config);
+    new FormValidator(document.forms.editForm, config).clearValidationErrors();
 });
 
 function addClosePopupListeners(popupElement) {
@@ -98,4 +108,9 @@ editPopup.addEventListener('submit', submitEditProfilePopup);
 initialCards.forEach((item) => {
     const card = new Card(item, templateSelector);
     card.addCard();
-})
+});
+
+formList.forEach((item) => {
+    const formElement = new FormValidator(item, config);
+    formElement.enableValidation();
+});
