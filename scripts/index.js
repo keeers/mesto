@@ -1,5 +1,5 @@
 import { initialCards } from './initialCards.js';
-import Card from './Card.js';
+import Card from './сard.js';
 import FormValidator from './FormValidator.js';
 
 const config = {
