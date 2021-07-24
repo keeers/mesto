@@ -19,6 +19,7 @@ export default class Card {
         popupImage.src = this._image.src;
         popupImage.alt = 'На фотографии ' + this._title.textContent;
         popupCaption.textContent = this._title.textContent;
+
         openPopup(imagePopup);
     };
 
