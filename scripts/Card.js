@@ -38,7 +38,7 @@ export default class Card {
         this._card.querySelector('.card__image').addEventListener('click', () => { this._openImagePopup() });
     };
 
-    _createCard() {
+    createCard() {
         this._card = this._getTemplate();
         this._image = this._card.querySelector('.card__image');
         this._title = this._card.querySelector('.card__title');
@@ -49,11 +49,6 @@ export default class Card {
 
         this._setCardListeners();
         return this._card;
-    };
-
-    addCard() {
-        const cards = document.querySelector('.cards');
-        cards.prepend(this._createCard());
     };
 };
 
