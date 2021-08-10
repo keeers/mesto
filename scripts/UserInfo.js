@@ -1,5 +1,5 @@
 export default class UserInfo {
-    constructor(nameSelector, jobSelector) {
+    constructor({ nameSelector, jobSelector }) {
         this._nameSelector = nameSelector;
         this._jobSelector = jobSelector;
         this._profileName = document.querySelector(this._nameSelector);
