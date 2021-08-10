@@ -1,27 +1,35 @@
+import sochi from '../images/polyana.jpg';
+import kazan from '../images/kazan.jpg';
+import NN from '../images/nizhniy.jpg';
+import ivanovo from '../images/ivanovo.jpg';
+import moscow from '../images/metro.jpg';
+import kaliningrad from '../images/kaliningrad.jpg';
+
+
 export const initialCards = [
     {
         name: 'Сочи',
-        link: './images/polyana.jpg'
+        link: sochi
     },
     {
         name: 'Казань',
-        link: './images/kazan.jpg'
+        link: kazan
     },
     {
         name: 'Нижний Новгород',
-        link: './images/nizhniy.jpg'
+        link: NN
     },
     {
         name: 'Иваново',
-        link: './images/ivanovo.jpg'
+        link: ivanovo
     },
     {
         name: 'Москва',
-        link: './images/metro.jpg'
+        link: moscow
     },
     {
         name: 'Калининград',
-        link: './images/kaliningrad.jpg'
+        link: kaliningrad
     }
 ];
 
