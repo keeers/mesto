@@ -21,7 +21,7 @@ export const initialCards = [
     },
     {
         name: 'Калининград',
-        link: '../images/kaliningrad.jpg'
+        link: './images/kaliningrad.jpg'
     }
 ];
 
