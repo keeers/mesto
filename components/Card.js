@@ -1,7 +1,7 @@
 export default class Card {
-    constructor({ name, link, handleCardClick, templateSelector }) {
-        this._name = name;
-        this._src = link;
+    constructor({ data }, { handleCardClick, templateSelector }) {
+        this._name = data.name;
+        this._src = data.link;
         this._templateSelector = templateSelector;
         this._handleCardClick = handleCardClick;
     };
@@ -25,15 +25,17 @@ export default class Card {
     };
 
     _setCardListeners() {
-        this._card.querySelector('.card__like-btn').addEventListener('click', (evt) => { this._toggleLike(evt) });
-        this._card.querySelector('.card__delete-btn').addEventListener('click', (evt) => { this._deleteCard(evt) });
-        this._card.querySelector('.card__image').addEventListener('click', () => { this._openImagePopup() });
+        this._likeButton.addEventListener('click', (evt) => { this._toggleLike(evt) });
+        this._deleteButton.addEventListener('click', (evt) => { this._deleteCard(evt) });
+        this._image.addEventListener('click', () => { this._openImagePopup() });
     };
 
     createCard() {
         this._card = this._getTemplate();
         this._image = this._card.querySelector('.card__image');
         this._title = this._card.querySelector('.card__title');
+        this._likeButton = this._card.querySelector('.card__like-btn');
+        this._deleteButton = this._card.querySelector('.card__delete-btn');
 
         this._image.src = this._src;
         this._image.alt = 'На фотографии ' + this._name;

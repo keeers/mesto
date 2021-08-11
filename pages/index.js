@@ -5,22 +5,11 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
-import { initialCards, config, formList, templateSelector, editButton, addButton, popupInputName, popupInputJob, imagePopupSelector, addCardPopupSelector, editProfilePopupSelector, cardListSelector, profileNameSelector, profileJobSelector } from '../utils/constants.js';
+import { initialCards, config, templateSelector, editButton, addButton, popupInputName, popupInputJob, imagePopupSelector, addCardPopupSelector, editProfilePopupSelector, cardListSelector, profileNameSelector, profileJobSelector } from '../utils/constants.js';
 
 const cards = new Section({
-    items: initialCards, renderer: (cardItem) => {
-        const card = new Card({
-            name: cardItem.name, link: cardItem.link,
-            handleCardClick: () => {
-                const imagePopup = new PopupWithImage({ popupSelector: imagePopupSelector, name: cardItem.name, src: cardItem.link })
-                imagePopup.open();
-                imagePopup.setEventListeners();
-            }
-            , templateSelector: templateSelector
-        });
-        const cardElement = card.createCard();
-        cards.addElement(cardElement);
-
+    renderer: (cardItem) => {
+        cards.addElement(createCard(cardItem));
     }, containerSelector: cardListSelector
 });
 
@@ -33,16 +22,7 @@ const addPopup = new PopupWithForm({
             name: formData.titleInput,
             link: formData.linkInput
         };
-        const newCard = new Card({
-            name: cardInfo.name, link: cardInfo.link,
-            handleCardClick: () => {
-                const imagePopup = new PopupWithImage({ popupSelector: imagePopupSelector, name: item.name, src: item.link })
-                imagePopup.open();
-                imagePopup.setEventListeners();
-            }
-            , templateSelector: templateSelector
-        }).createCard();
-        cards.addElement(newCard);
+        cards.addElement(createCard(cardInfo));
         addPopup.close();
     }
 });
@@ -55,27 +35,43 @@ const editPopup = new PopupWithForm({
     }
 })
 
+const imagePopup = new PopupWithImage({ popupSelector: imagePopupSelector })
+
+const addForm = document.forms.addForm;
+const addFormValidator = new FormValidator(addForm, config);
+const editForm = document.forms.editForm;
+const editFormValidator = new FormValidator(editForm, config)
+
+function createCard(cardItem) {
+    const card = new Card({
+        data: cardItem
+    }, {
+        handleCardClick: () => {
+            imagePopup.open(cardItem.name, cardItem.link);
+        }
+        , templateSelector: templateSelector
+    }).createCard();
+
+    return card;
+}
+
 addButton.addEventListener('click', () => {
-    const addForm = document.forms.addForm;
-    addForm.reset();
-    new FormValidator(addForm, config).clearValidationErrors();
+    addFormValidator.clearValidationErrors();
     addPopup.open();
 });
 
 editButton.addEventListener('click', () => {
     popupInputName.value = userInfo.getUserInfo().name;
     popupInputJob.value = userInfo.getUserInfo().job;
-    const editForm = document.forms.editForm;
-    new FormValidator(editForm, config).clearValidationErrors();
+    editFormValidator.clearValidationErrors();
     editPopup.open();
 });
 
-formList.forEach((item) => {
-    const formElement = new FormValidator(item, config);
-    formElement.enableValidation();
-});
 
 editPopup.setEventListeners();
 addPopup.setEventListeners();
-cards.renderItems();
+imagePopup.setEventListeners();
+addFormValidator.enableValidation();
+editFormValidator.enableValidation();
+cards.renderItems(initialCards);
 

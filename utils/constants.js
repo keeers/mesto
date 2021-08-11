@@ -43,7 +43,6 @@ export const config = {
     errorClass: 'popup__input-error_active'
 };
 
-export const formList = Array.from(document.querySelectorAll('.popup__container'));
 export const templateSelector = '.template';
 export const editButton = document.querySelector('.profile__edit-btn');
 export const addButton = document.querySelector('.profile__add-btn');
