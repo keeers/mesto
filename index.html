@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/x-icon" href="<%=require('./images/favicon.png')%>">
+    <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.png">
+    <link rel="stylesheet" href="./pages/index.css">
     <title>Место</title>
 </head>
 
@@ -13,15 +14,14 @@
     <div class="page">
         <header class="header">
             <a class="link" href="#" target="_blank">
-                <img src="<%=require('./images/header__logo.svg')%>" class="header__logo" alt="Место Россия">
+                <img src="./images/header__logo.svg" class="header__logo" alt="Место Россия">
             </a>
         </header>
 
         <main class="content">
 
             <section class="profile">
-                <img class="profile__avatar" src="<%=require('./images/profile__avatar.jpg')%>"
-                    alt="Аватар пользователя">
+                <img class="profile__avatar" src="./images/profile__avatar.jpg" alt="Аватар пользователя">
                 <div class="profile__info">
                     <div>
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -100,7 +100,7 @@
             </div>
         </article>
     </template>
-
+    <script src="./pages/index.js" type="module"></script>
 </body>
 
 </html>
