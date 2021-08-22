@@ -1,0 +1,10 @@
+.card__like{
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    margin: 0;
+    padding: 3px 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}

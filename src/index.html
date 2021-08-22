@@ -20,12 +20,11 @@
         <main class="content">
 
             <section class="profile">
-                <img class="profile__avatar" src="<%=require('../src/images/profile__avatar.jpg')%>"
-                    alt="Аватар пользователя">
+                <img class="profile__avatar" src="" alt="Аватар пользователя">
                 <div class="profile__info">
                     <div>
-                        <h1 class="profile__name">Жак-Ив Кусто</h1>
-                        <p class="profile__job">Исследователь океана</p>
+                        <h1 class="profile__name"></h1>
+                        <p class="profile__job"></p>
                     </div>
                     <button type="button" aria-label="Изменить" class="profile__edit-btn"></button>
                 </div>
@@ -96,7 +95,10 @@
             <button type="button" aria-label="Удалить" class="card__delete-btn"></button>
             <div class="card__rectangle">
                 <h2 class="card__title"></h2>
-                <button type="button" aria-label="Нравится" class="card__like-btn"></button>
+                <div class="card__likes">
+                    <button type="button" aria-label="Нравится" class="card__like-btn"></button>
+                    <p class="card__like">0</p>
+                </div>
             </div>
         </article>
     </template>

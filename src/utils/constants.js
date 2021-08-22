@@ -1,39 +1,3 @@
-import sochi from '../images/polyana.jpg';
-import kazan from '../images/kazan.jpg';
-import NN from '../images/nizhniy.jpg';
-import ivanovo from '../images/ivanovo.jpg';
-import moscow from '../images/metro.jpg';
-import kaliningrad from '../images/kaliningrad.jpg';
-
-
-export const initialCards = [
-    {
-        name: 'Сочи',
-        link: sochi
-    },
-    {
-        name: 'Казань',
-        link: kazan
-    },
-    {
-        name: 'Нижний Новгород',
-        link: NN
-    },
-    {
-        name: 'Иваново',
-        link: ivanovo
-    },
-    {
-        name: 'Москва',
-        link: moscow
-    },
-    {
-        name: 'Калининград',
-        link: kaliningrad
-    }
-];
-
-
 export const config = {
     formSelector: '.popup__container',
     inputSelector: '.popup__input',
@@ -52,5 +16,6 @@ export const imagePopupSelector = '.popup_type_image';
 export const addCardPopupSelector = '.popup_type_add-card';
 export const editProfilePopupSelector = '.popup_type_edit-profile';
 export const cardListSelector = '.cards';
+export const cardLikeSelector = '.card__like';
 export const profileNameSelector = '.profile__name';
 export const profileJobSelector = '.profile__job';

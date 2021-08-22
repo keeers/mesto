@@ -5,12 +5,21 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
-import { initialCards, config, templateSelector, editButton, addButton, popupInputName, popupInputJob, imagePopupSelector, addCardPopupSelector, editProfilePopupSelector, cardListSelector, profileNameSelector, profileJobSelector } from '../utils/constants.js';
+import Api from '../components/Api.js';
+import { config, templateSelector, editButton, addButton, popupInputName, popupInputJob, imagePopupSelector, addCardPopupSelector, editProfilePopupSelector, cardListSelector, cardLikeSelector, profileNameSelector, profileJobSelector } from '../utils/constants.js';
 
 const cards = new Section({
     renderer: (cardItem) => {
         cards.addElement(createCard(cardItem));
     }, containerSelector: cardListSelector
+});
+
+const api = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27',
+    headers: {
+        authorization: '7abd72de-4e29-415a-9784-32653cfffc2b',
+        'Content-Type': 'application/json'
+    }
 });
 
 const userInfo = new UserInfo({ nameSelector: profileNameSelector, jobSelector: profileJobSelector });
@@ -23,6 +32,7 @@ const addPopup = new PopupWithForm({
             link: formData.linkInput
         };
         cards.addElement(createCard(cardInfo));
+        api.addNewCard(formData).catch(err => console.log(err));
         addPopup.close();
     }
 });
@@ -32,6 +42,7 @@ const editPopup = new PopupWithForm({
     handleFormSubmit: (formData) => {
         userInfo.setUserInfo(formData.nameInput, formData.jobInput);
         editPopup.close();
+        api.setUserInfo(formData).catch(err => console.log(err));
     }
 })
 
@@ -51,7 +62,7 @@ function createCard(cardItem) {
         }
         , templateSelector: templateSelector
     }).createCard();
-
+    card.querySelector(cardLikeSelector).textContent = cardItem.likes;
     return card;
 }
 
@@ -73,5 +84,12 @@ addPopup.setEventListeners();
 imagePopup.setEventListeners();
 addFormValidator.enableValidation();
 editFormValidator.enableValidation();
-cards.renderItems(initialCards);
+
+api.getInitialCards().then(initialCards => cards.renderItems(initialCards)).catch(err => console.log(err));
+api.getUserInfo().then(data => {
+    userInfo.setUserInfo(data.name, data.about);
+    userInfo.setUserPic(data.avatar);
+}).catch(err => console.log(err));
+
+
 

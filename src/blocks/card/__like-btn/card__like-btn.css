@@ -1,7 +1,8 @@
 .card__like-btn{
     width: 22px;
     height: 19px;
-    margin-right: 15px;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
     border: 0 none;
     color: white;

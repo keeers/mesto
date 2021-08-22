@@ -4,6 +4,7 @@ export default class UserInfo {
         this._jobSelector = jobSelector;
         this._profileName = document.querySelector(this._nameSelector);
         this._profileJob = document.querySelector(this._jobSelector);
+        this._profilePic = document.querySelector('.profile__avatar');
     }
 
     getUserInfo() {
@@ -14,5 +15,9 @@ export default class UserInfo {
     setUserInfo(name, job) {
         this._profileName.textContent = name;
         this._profileJob.textContent = job;
+    }
+
+    setUserPic(pic) {
+        this._profilePic.src = pic;
     }
 }
