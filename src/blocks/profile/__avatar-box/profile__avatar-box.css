@@ -1,0 +1,7 @@
+.profile__avatar-box:hover{
+    background-image: url(../../../images/editAvatar__button.svg);
+    background-position: center;
+    background-size: 26px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}

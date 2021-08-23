@@ -1,0 +1,8 @@
+.card__delete-btn_disabled{
+    opacity: 0;
+    cursor: default;
+}
+
+.card__delete-btn_disabled:hover{
+    opacity: 0;
+}

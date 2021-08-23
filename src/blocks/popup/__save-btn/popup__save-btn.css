@@ -8,9 +8,7 @@
     height: 50px;
     margin: 0;
     padding: 0;
-    margin-left: 36px;
-    margin-top: 48px;
-    margin-bottom: 37px;
+    margin: 48px 0 36px 36px;
     color: white;
     border: none;
     background-color: black;

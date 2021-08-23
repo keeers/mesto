@@ -19,14 +19,8 @@ export default class Card {
         evt.target.classList.toggle('card__like-btn_is-active');
     };
 
-    _deleteCard(evt) {
-        const card = evt.target.closest('.card');
-        card.remove();
-    };
-
     _setCardListeners() {
         this._likeButton.addEventListener('click', (evt) => { this._toggleLike(evt) });
-        this._deleteButton.addEventListener('click', (evt) => { this._deleteCard(evt) });
         this._image.addEventListener('click', () => { this._openImagePopup() });
     };
 
