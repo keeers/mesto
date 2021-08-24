@@ -8,7 +8,7 @@ import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
 import Api from '../components/Api.js';
 import { config, templateSelector, editButton, addButton, popupInputName, popupInputJob, imagePopupSelector, addCardPopupSelector, editProfilePopupSelector, editAvatarPopupSelector, deletePopupSelector, cardListSelector, cardSelector, cardLikeSectionSelector, cardLikeSelector, cardLikeButtonSelector, likeButtonActiveClass, deleteButtonSelector, deleteCardSelector, deleteCardClassSelector, inactiveDeleteButtonSelector, profileNameSelector, profileJobSelector, profileAvatarBox } from '../utils/constants.js';
-
+import { apiToken, apiURL } from '../utils/apiData.js';
 const cards = new Section({
     renderer: (cardItem) => {
         cards.addElement(createCard(cardItem));
@@ -16,9 +16,9 @@ const cards = new Section({
 });
 
 const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27',
+    baseUrl: apiURL,
     headers: {
-        authorization: '7abd72de-4e29-415a-9784-32653cfffc2b',
+        authorization: apiToken,
         'Content-Type': 'application/json'
     }
 });
