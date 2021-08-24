@@ -158,4 +158,22 @@ export default class Api {
             } return Promise.reject(`Ошибка: ${res.status}`);
         });
     }
+
+    cardUpdate(id, likes) {
+        return fetch(`${this._baseUrl}/cards/${id}`, {
+            method: 'PATCH',
+            headers: {
+                authorization: this._headers.authorization,
+                'Content-Type': this._headers["Content-Type"]
+            },
+            body: JSON.stringify({
+                likes: likes,
+            })
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            } return Promise.reject(`Ошибка: ${res.status}`);
+        });
+    }
+
 }

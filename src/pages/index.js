@@ -7,8 +7,9 @@ import PopupDeleteCard from '../components/PopupDeleteCard';
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
 import Api from '../components/Api.js';
-import { config, templateSelector, editButton, addButton, popupInputName, popupInputJob, imagePopupSelector, addCardPopupSelector, editProfilePopupSelector, editAvatarPopupSelector, deletePopupSelector, cardListSelector, cardSelector, cardLikeSectionSelector, cardLikeSelector, cardLikeButtonSelector, likeButtonActiveClass, deleteButtonSelector, deleteCardSelector, deleteCardClassSelector, inactiveDeleteButtonSelector, profileNameSelector, profileJobSelector, profileAvatarBox } from '../utils/constants.js';
+import { config, templateSelector, editButton, addButton, popupInputName, popupInputJob, imagePopupSelector, addCardPopupSelector, editProfilePopupSelector, editAvatarPopupSelector, deletePopupSelector, cardListSelector, cardSelector, cardLikeSelector, cardLikeButtonSelector, likeButtonActiveClass, deleteButtonSelector, deleteCardSelector, deleteCardClassSelector, inactiveDeleteButtonSelector, profileNameSelector, profileJobSelector, profileAvatarBox, submitEditSelector, submitAddSelector, submitAvatarSelector } from '../utils/constants.js';
 import { apiToken, apiURL } from '../utils/apiData.js';
+
 const cards = new Section({
     renderer: (cardItem) => {
         cards.addElement(createCard(cardItem));
@@ -28,16 +29,24 @@ const userInfo = new UserInfo({ nameSelector: profileNameSelector, jobSelector: 
 const addPopup = new PopupWithForm({
     popupSelector: addCardPopupSelector,
     handleFormSubmit: (formData) => {
+        const cardInfo = {
+            name: formData.titleInput,
+            link: formData.linkInput,
+            likes: [],
+            likesCount: 0,
+        };
+        const button = document.querySelector(submitAddSelector);
         api.getUserId().then(id => {
-            const cardInfo = {
-                name: formData.titleInput,
-                link: formData.linkInput,
-                likesCount: 0,
-                owner: id
-            };
+            cardInfo.owner = id;
             cards.addElement(createCard(cardInfo));
+        }).then(() => {
+            api.getInitialCards().then(data => { cardInfo.id = data[data.length - 1].id }).catch(err => console.log(err));
         }).catch(err => console.log(err));
-        api.addNewCard(formData).catch(err => console.log(err));
+        api.addNewCard(formData).then(() => {
+            button.textContent += '...';
+        }).catch(err => console.log(err)).finally(() => {
+            button.textContent = button.textContent.slice(0, -3);
+        });
         addPopup.close();
     }
 });
@@ -46,8 +55,13 @@ const editPopup = new PopupWithForm({
     popupSelector: editProfilePopupSelector,
     handleFormSubmit: (formData) => {
         userInfo.setUserInfo(formData.nameInput, formData.jobInput);
+        const button = document.querySelector(submitEditSelector);
+        api.setUserInfo(formData).then(() => {
+            button.textContent += '...';
+        }).catch(err => console.log(err)).finally(() => {
+            button.textContent = button.textContent.slice(0, -3);
+        });
         editPopup.close();
-        api.setUserInfo(formData).catch(err => console.log(err));
     }
 });
 
@@ -57,7 +71,6 @@ const deletePopup = new PopupDeleteCard({
     popupSelector: deletePopupSelector, handleFormSubmit: () => {
         const card = document.querySelector(deleteCardSelector);
         const deleteCardId = (deletePopup.getCardId());
-        console.log(card);
         api.deleteCard(deleteCardId).catch(err => console.log(err));
         deletePopup.deleteCard(card);
         deletePopup.close();
@@ -66,8 +79,13 @@ const deletePopup = new PopupDeleteCard({
 
 const editAvatarPopup = new PopupWithForm({
     popupSelector: editAvatarPopupSelector, handleFormSubmit: (formData) => {
-        api.setAvatar(formData.linkInput).catch(err => console.log(err));
+        const button = document.querySelector(submitAvatarSelector);
         userInfo.setUserPic(formData.linkInput);
+        api.setAvatar(formData.linkInput).then(() => {
+            button.textContent += '...';
+        }).catch(err => console.log(err)).finally(() => {
+            button.textContent = button.textContent.slice(0, -3);
+        });
         editAvatarPopup.close();
     }
 });
@@ -88,37 +106,61 @@ function createCard(cardItem) {
         }
         , templateSelector: templateSelector
     }).createCard()
+
     const deleteButton = card.querySelector(deleteButtonSelector);
     const likeButton = card.querySelector(cardLikeButtonSelector);
     const likeCounter = card.querySelector(cardLikeSelector);
     likeCounter.textContent = +cardItem.likesCount;
+
     api.getUserId().then(id => {
+
         function removingLike() {
-            api.removeLike(cardItem.id);
+            api.removeLike(cardItem.id).then(() => {
+                api.getInitialCards().then(data => {
+                    data.forEach(item => {
+                        if (item.id === cardItem.id) {
+                            checkLikesStatement(item);
+                        };
+                    })
+                }).catch(err => console.log(err));
+            }).catch(err => console.log(err));
             likeCounter.textContent--;
         }
 
         function addingLike() {
-            api.setLike(cardItem.id);
+            api.setLike(cardItem.id).then(() => {
+                api.getInitialCards().then(data => {
+                    data.forEach(item => {
+                        if (item.id === cardItem.id) {
+                            checkLikesStatement(item);
+                        };
+                    })
+                }).catch(err => console.log(err));;
+            }).catch(err => console.log(err));;;
             likeCounter.textContent++;
         };
-        const idList = [];
+
+        function checkLikesStatement(cardItem) {
+            const idList = [];
+            cardItem.likes.forEach(user => {
+                idList.push(user._id)
+            });
+            if (idList.some(userId => userId === id)) {
+                likeButton.classList.add(likeButtonActiveClass);
+                likeButton.addEventListener('click', removingLike);
+                likeButton.removeEventListener('click', addingLike);
+            } else if (!(idList.every(userId => userId == id)) || (idList.length === 0)) {
+                likeButton.addEventListener('click', addingLike);
+                likeButton.removeEventListener('click', removingLike);
+            };
+        };
+
         if (!(cardItem.owner === id)) {
             deleteButton.classList.add(inactiveDeleteButtonSelector);
             deleteButton.setAttribute('disabled', true);
         };
-        cardItem.likes.forEach(user => {
-            idList.push(user._id)
-        });
-        if (idList.some(userId => userId === id)) {
-            likeButton.classList.add(likeButtonActiveClass);
-            likeButton.addEventListener('click', removingLike);
-            likeButton.removeEventListener('click', addingLike)
-        } else if (idList.every(userId => userId == id)) {
-            likeButton.addEventListener('click', addingLike);
-            likeButton.removeEventListener('click', removingLike);
-        };
 
+        checkLikesStatement(cardItem);
     }).catch(err => console.log(err));
 
     deleteButton.addEventListener('click', () => {
@@ -160,4 +202,3 @@ api.getUserInfo().then(data => {
     userInfo.setUserInfo(data.name, data.about);
     userInfo.setUserPic(data.avatar);
 }).catch(err => console.log(err));
-
