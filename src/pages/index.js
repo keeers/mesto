@@ -36,18 +36,12 @@ const addPopup = new PopupWithForm({
             likesCount: 0,
             owner: userId
         };
-        api.addNewCard(formData).then(() => {
+        api.addNewCard(formData).then((data) => {
             cards.addElement(createCard(cardInfo));
             submitAddButton.textContent += '...';
+            cardInfo.id = data._id;
             addPopup.close();
         })
-            .then(() => {
-                api.getInitialCards()
-                    .then(data => {
-                        cardInfo.id = data[0]._id;
-                    })
-                    .catch(err => console.log(err));
-            })
             .catch(err => console.log(err))
             .finally(() => {
                 submitAddButton.textContent = submitAddButton.textContent.slice(0, -3);
@@ -119,6 +113,12 @@ function createCard(cardItem) {
             deletePopup.open();
             deletePopup.setCardId(cardItem.id);
         },
+        handleAddLike: () => {
+            api.addLike(cardItem.id).catch(err => console.log(err));;;
+        },
+        handleRemoveLike: () => {
+            api.removeLike(cardItem.id).catch(err => console.log(err));
+        },
         cardSelector: cardSelector,
         deleteCardClassSelector: deleteCardClassSelector,
         templateSelector: templateSelector,
@@ -129,8 +129,7 @@ function createCard(cardItem) {
         cardLikeButtonSelector: cardLikeButtonSelector,
         cardDeleteButtonSelector: cardDeleteButtonSelector,
         cardLikeSelector: cardLikeSelector,
-        userId: userId,
-        api: api
+        userId: userId
     }).createCard();
 
     return card;

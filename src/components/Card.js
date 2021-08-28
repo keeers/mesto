@@ -1,10 +1,9 @@
 export default class Card {
-    constructor({ data }, { handleCardClick, handleDeleteClick, cardSelector, deleteCardClassSelector, templateSelector, likeButtonActiveClass, inactiveDeleteButtonClass, cardTitleSelector, cardImageSelector, cardLikeButtonSelector, cardDeleteButtonSelector, cardLikeSelector, userId, api }) {
+    constructor({ data }, { handleCardClick, handleDeleteClick, handleAddLike, handleRemoveLike, cardSelector, deleteCardClassSelector, templateSelector, likeButtonActiveClass, inactiveDeleteButtonClass, cardTitleSelector, cardImageSelector, cardLikeButtonSelector, cardDeleteButtonSelector, cardLikeSelector, userId }) {
         this._name = data.name;
         this._src = data.link;
         this._id = userId;
         this._cardItem = data;
-        this._api = api;
         this._cardSelector = cardSelector;
         this._templateSelector = templateSelector;
         this._deleteCardClassSelector = deleteCardClassSelector;
@@ -17,6 +16,8 @@ export default class Card {
         this._cardLikeButtonSelector = cardLikeButtonSelector;
         this._handleCardClick = handleCardClick;
         this._handleDeleteClick = handleDeleteClick;
+        this._handleAddLike = handleAddLike;
+        this._handleRemoveLike = handleRemoveLike;
         this._addLike = this._addLike.bind(this);
         this._removeLike = this._removeLike.bind(this);
     };
@@ -35,35 +36,34 @@ export default class Card {
     };
 
     _addLike() {
-        this._api.addLike(this._cardItem.id).then(() => {
-            this._api.getInitialCards().then(data => {
-                data.forEach(item => {
-                    if (item._id === this._cardItem.id) {
-                        this._checkLikesStatement(item);
-                    };
-                })
-            }).catch(err => console.log(err));
-            this._likeCounter.textContent++;
-        }).catch(err => console.log(err));
-
+        this._handleAddLike();
+        this._likeCounter.textContent++;
     };
 
     _removeLike() {
-        this._api.removeLike(this._cardItem.id).then(() => {
-            this._api.getInitialCards().then(data => {
-                data.forEach(item => {
-                    if (item._id === this._cardItem.id) {
-                        this._checkLikesStatement(item);
-                    };
-                })
-            }).catch(err => console.log(err));
-            this._likeCounter.textContent--;
-        }).catch(err => console.log(err));
-
+        this._handleRemoveLike();
+        this._likeCounter.textContent--;
     };
 
+    _setRemoveLikeListener() {
+        this._likeButton.addEventListener('click', this._removeLike);
+        this._likeButton.removeEventListener('click', this._addLike);
+    };
+
+    _setAddLikeListener() {
+        this._likeButton.addEventListener('click', this._addLike);
+        this._likeButton.removeEventListener('click', this._removeLike);
+    }
+
     _setCardListeners() {
-        this._likeButton.addEventListener('click', (evt) => { this._toggleLike(evt) });
+        this._likeButton.addEventListener('click', (evt) => { this._toggleLike(evt); });
+        this._likeButton.addEventListener('mouseup', () => {
+            if (this._likeButton.classList.contains(this._likeButtonActiveClass)) {
+                this._setRemoveLikeListener();
+            } else {
+                this._setAddLikeListener();
+            }
+        });
         this._image.addEventListener('click', () => { this._openImagePopup() });
         this._deleteButton.addEventListener('click', () => {
             this._handleDeleteClick();
@@ -85,11 +85,9 @@ export default class Card {
         });
         if (idList.some(userId => userId === this._id)) {
             this._likeButton.classList.add(this._likeButtonActiveClass);
-            this._likeButton.addEventListener('click', this._removeLike);
-            this._likeButton.removeEventListener('click', this._addLike);
+            this._setRemoveLikeListener();
         } else if (!(idList.every(userId => userId == this._id)) || (idList.length === 0)) {
-            this._likeButton.addEventListener('click', this._addLike);
-            this._likeButton.removeEventListener('click', this._removeLike);
+            this._setAddLikeListener();
         };
     };
 
