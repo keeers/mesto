@@ -114,10 +114,14 @@ function createCard(cardItem) {
             deletePopup.setCardId(cardItem.id);
         },
         handleAddLike: () => {
-            api.addLike(cardItem.id).catch(err => console.log(err));;;
+            api.addLike(cardItem.id).then(data => {
+                card.updateLikesInfo(data);
+            }).catch(err => console.log(err));;;
         },
         handleRemoveLike: () => {
-            api.removeLike(cardItem.id).catch(err => console.log(err));
+            api.removeLike(cardItem.id).then(data => {
+                card.updateLikesInfo(data);
+            }).catch(err => console.log(err));
         },
         cardSelector: cardSelector,
         deleteCardClassSelector: deleteCardClassSelector,
@@ -130,9 +134,10 @@ function createCard(cardItem) {
         cardDeleteButtonSelector: cardDeleteButtonSelector,
         cardLikeSelector: cardLikeSelector,
         userId: userId
-    }).createCard();
+    })
+    const newCard = card.createCard();
 
-    return card;
+    return newCard;
 };
 
 addButton.addEventListener('click', () => {
@@ -166,7 +171,7 @@ let userId;
 Promise.all([api.getInitialCards(), api.getUserInfo()]).then(([initialApiCards, userData]) => {
     const initialCards = [];
     initialApiCards.forEach(item => {
-        initialCards.unshift({ name: item.name, link: item.link, likesCount: item.likes.length, likes: item.likes, owner: item.owner._id, id: item._id })
+        initialCards.unshift({ name: item.name, link: item.link, likes: item.likes, owner: item.owner._id, id: item._id })
     });
     userId = userData._id;
     cards.renderItems(initialCards);

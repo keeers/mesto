@@ -31,39 +31,15 @@ export default class Card {
         this._handleCardClick();
     };
 
-    _toggleLike(evt) {
-        evt.target.classList.toggle(this._likeButtonActiveClass);
-    };
-
     _addLike() {
         this._handleAddLike();
-        this._likeCounter.textContent++;
     };
 
     _removeLike() {
         this._handleRemoveLike();
-        this._likeCounter.textContent--;
     };
-
-    _setRemoveLikeListener() {
-        this._likeButton.addEventListener('click', this._removeLike);
-        this._likeButton.removeEventListener('click', this._addLike);
-    };
-
-    _setAddLikeListener() {
-        this._likeButton.addEventListener('click', this._addLike);
-        this._likeButton.removeEventListener('click', this._removeLike);
-    }
 
     _setCardListeners() {
-        this._likeButton.addEventListener('click', (evt) => { this._toggleLike(evt); });
-        this._likeButton.addEventListener('mouseup', () => {
-            if (this._likeButton.classList.contains(this._likeButtonActiveClass)) {
-                this._setRemoveLikeListener();
-            } else {
-                this._setAddLikeListener();
-            }
-        });
         this._image.addEventListener('click', () => { this._openImagePopup() });
         this._deleteButton.addEventListener('click', () => {
             this._handleDeleteClick();
@@ -78,16 +54,20 @@ export default class Card {
         };
     };
 
-    _checkLikesStatement(cardItem) {
-        const idList = [];
+    updateLikesInfo(cardItem) {
+        this._idList = [];
         cardItem.likes.forEach(user => {
-            idList.push(user._id)
+            this._idList.push(user._id)
         });
-        if (idList.some(userId => userId === this._id)) {
+        this._likeCounter.textContent = cardItem.likes.length;
+        if (this._idList.some(userId => userId === this._id)) {
             this._likeButton.classList.add(this._likeButtonActiveClass);
-            this._setRemoveLikeListener();
-        } else if (!(idList.every(userId => userId == this._id)) || (idList.length === 0)) {
-            this._setAddLikeListener();
+            this._likeButton.addEventListener('click', this._removeLike);
+            this._likeButton.removeEventListener('click', this._addLike);
+        } else if (!(this._idList.every(userId => userId == this._id)) || (this._idList.length === 0)) {
+            this._likeButton.classList.remove(this._likeButtonActiveClass);
+            this._likeButton.addEventListener('click', this._addLike);
+            this._likeButton.removeEventListener('click', this._removeLike);
         };
     };
 
@@ -98,14 +78,13 @@ export default class Card {
         this._likeButton = this._card.querySelector(this._cardLikeButtonSelector);
         this._deleteButton = this._card.querySelector(this._cardDeleteButtonSelector);
         this._likeCounter = this._card.querySelector(this._cardLikeSelector);
-        this._likeCounter.textContent = +this._cardItem.likesCount;
 
         this._image.src = this._src;
         this._image.alt = 'На фотографии ' + this._name;
         this._title.textContent = this._name;
         this._setCardListeners();
         this._checkCardOwner();
-        this._checkLikesStatement(this._cardItem);
+        this.updateLikesInfo(this._cardItem);
 
         return this._card;
     };
