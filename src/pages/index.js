@@ -10,6 +10,8 @@ import Api from '../components/Api.js';
 import { config, templateSelector, editButton, addButton, popupInputName, popupInputJob, imagePopupSelector, addCardPopupSelector, editProfilePopupSelector, editAvatarPopupSelector, deletePopupSelector, cardListSelector, cardSelector, cardLikeSelector, cardImageSelector, cardTitleSelector, cardLikeButtonSelector, cardDeleteButtonSelector, likeButtonActiveClass, deleteCardSelector, deleteCardClassSelector, inactiveDeleteButtonClass, profileNameSelector, profileJobSelector, profileAvatarSelector, profileAvatarBox, submitEditButton, submitAddButton, submitAvatarButton } from '../utils/constants.js';
 import { apiToken, apiURL } from '../utils/apiData.js';
 
+let userId;
+
 const cards = new Section({
     renderer: (cardItem) => {
         cards.addElement(createCard(cardItem));
@@ -72,8 +74,7 @@ const deletePopup = new PopupDeleteCard({
     deleteCardSelector: deleteCardSelector,
     deleteCardClassSelector: deleteCardClassSelector,
     handleFormSubmit: () => {
-        const deleteCardId = (deletePopup.getCardId());
-        api.deleteCard(deleteCardId)
+        api.deleteCard(deletePopup.getCardId())
             .then(() => {
                 deletePopup.close();
                 deletePopup.deleteCard();
@@ -167,8 +168,6 @@ editAvatarPopup.setEventListeners();
 addFormValidator.enableValidation();
 editFormValidator.enableValidation();
 editAvatarFormValidator.enableValidation();
-
-let userId;
 
 Promise.all([api.getInitialCards(), api.getUserInfo()]).then(([initialApiCards, userData]) => {
     const initialCards = [];
