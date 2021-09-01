@@ -15,12 +15,12 @@ export default class PopupWithForm extends Popup {
         })
 
         return this._formValues;
-    }
+    };
 
     close() {
         super.close();
         this._container.reset();
-    }
+    };
 
     setEventListeners() {
         super.setEventListeners();
@@ -28,5 +28,5 @@ export default class PopupWithForm extends Popup {
             evt.preventDefault();
             this._handleFormSubmit(this._getInputValues());
         })
-    }
+    };
 }

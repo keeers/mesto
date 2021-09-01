@@ -11,14 +11,14 @@ export default class UserInfo {
     getUserInfo() {
         this._userInfo = { name: this._profileName.textContent, job: this._profileJob.textContent };
         return this._userInfo;
-    }
+    };
 
     setUserInfo(name, job) {
         this._profileName.textContent = name;
         this._profileJob.textContent = job;
-    }
+    };
 
     setUserPic(pic) {
         this._profilePic.src = pic;
-    }
+    };
 }

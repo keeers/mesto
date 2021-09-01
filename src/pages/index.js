@@ -68,13 +68,15 @@ const editPopup = new PopupWithForm({
 const imagePopup = new PopupWithImage({ popupSelector: imagePopupSelector });
 
 const deletePopup = new PopupDeleteCard({
-    popupSelector: deletePopupSelector, handleFormSubmit: () => {
-        const card = document.querySelector(deleteCardSelector);
+    popupSelector: deletePopupSelector,
+    deleteCardSelector: deleteCardSelector,
+    deleteCardClassSelector: deleteCardClassSelector,
+    handleFormSubmit: () => {
         const deleteCardId = (deletePopup.getCardId());
         api.deleteCard(deleteCardId)
             .then(() => {
-                deletePopup.deleteCard(card);
                 deletePopup.close();
+                deletePopup.deleteCard();
             })
             .catch(err => console.log(err));
     }

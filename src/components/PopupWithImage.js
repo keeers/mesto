@@ -12,5 +12,5 @@ export default class PopupWithImage extends Popup {
         this._popupImage.src = src;
         this._popupImage.alt = 'На фотографии ' + name;
         this._popupCaption.textContent = name;
-    }
+    };
 }
