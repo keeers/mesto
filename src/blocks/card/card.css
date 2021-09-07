@@ -1,7 +1,5 @@
 .card{
     position: relative;
-    width: 100%;
-    min-height: 362px;
 }
 
 @media screen and (max-width: 950px) {
